@@ -27,7 +27,19 @@ class App extends Component {
           id: 2
         }
       ]
-    }
+    };
+  }
+
+  addMsg = (newContent) => {
+    const oldMsg = this.state.messages;
+    const newMsg = {username: this.state.currentUser.name, content: newContent};
+    const messages = [...oldMsg, newMsg];
+    this.setState({messages: messages});
+  }
+
+  addUser = (newUser) => {
+    const currentUser = {name: newUser};
+    this.setState({currentUser: currentUser});
   }
 
   componentDidMount() {
@@ -42,13 +54,13 @@ class App extends Component {
       this.setState({messages: messages})
     }, 3000);
   }
-  
+
   render() {
     return (
       <div>
         <Navbar/>
         <MessageList message={this.state.messages}/>
-        <CharBar currentUser={this.state.currentUser}/>
+        <CharBar currentUser={this.state.currentUser} addMsg={this.addMsg} addUser={this.addUser}/>
       </div>
     );
   }
