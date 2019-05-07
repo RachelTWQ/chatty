@@ -8,7 +8,7 @@ class MessageList extends Component {
       
       return (
         <main className="messages"  >
-            {messagesArr.map((item) => (<Message username={item.username} content={item.content}/>))}
+            {messagesArr.map((item) => (<Message key={item.id} username={item.username} content={item.content}/>))}
         </main>
       )
     }
