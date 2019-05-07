@@ -22,7 +22,7 @@ class CharBar extends Component {
         <input
           className="chatbar-username"
           placeholder="Your Name (Optional)"
-          defaultValue={this.props.currentUser ? this.props.currentUser.name : "Anonymous"}
+          defaultValue={this.props.currentUser.name}
           type="text"
           onChange={this._onChange}
         />

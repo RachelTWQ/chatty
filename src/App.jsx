@@ -38,7 +38,7 @@ class App extends Component {
   }
 
   addUser = (newUser) => {
-    const currentUser = {name: newUser};
+    const currentUser = newUser ? {name: newUser} : {name: "Anonymous"};
     this.setState({currentUser: currentUser});
   }
 
