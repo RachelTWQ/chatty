@@ -28,6 +28,7 @@ class App extends Component {
         }
       ]
     };
+    this.socket = new WebSocket( "ws://localhost:3001" );
   }
 
   addMsg = (newContent) => {
@@ -38,7 +39,9 @@ class App extends Component {
       content: newContent
     };
     const messages = [...oldMsg, newMsg];
-    this.setState({messages: messages});
+    // this.setState({messages: messages});
+    this.socket.send(JSON.stringify(newMsg));
+    
   }
 
   addUser = (newUser) => {
@@ -48,10 +51,9 @@ class App extends Component {
 
   componentDidMount() {
     console.log("componentDidMount <App />");
-    const webSocket = new WebSocket( "ws://localhost:3001" );
-    webSocket.onopen = (e) => {
+    
+    this.socket.onopen = (e) => {
       console.log("Connected to server"); 
-      webSocket.send("whatever");
     }
     setTimeout(() => {
       console.log("Simulating incoming message");
