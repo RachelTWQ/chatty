@@ -32,7 +32,11 @@ class App extends Component {
 
   addMsg = (newContent) => {
     const oldMsg = this.state.messages;
-    const newMsg = {username: this.state.currentUser.name, content: newContent};
+    const newMsg = {
+      id: this.state.messages.length + 1,
+      username: this.state.currentUser.name, 
+      content: newContent
+    };
     const messages = [...oldMsg, newMsg];
     this.setState({messages: messages});
   }
