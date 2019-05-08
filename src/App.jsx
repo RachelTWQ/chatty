@@ -16,29 +16,29 @@ class App extends Component {
     this.state = {
       currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [
-        {
-          username: "Bob",
-          content: "Has anyone seen my marbles?",
-          id: 1
-        },
-        {
-          username: "Anonymous",
-          content: "No, I think you lost them. You lost your marbles Bob. You lost them for good.",
-          id: 2
-        }
+        // {
+        //   username: "Bob",
+        //   content: "Has anyone seen my marbles?",
+        //   id: 1
+        // },
+        // {
+        //   username: "Anonymous",
+        //   content: "No, I think you lost them. You lost your marbles Bob. You lost them for good.",
+        //   id: 2
+        // }
       ]
     };
     this.socket = new WebSocket( "ws://localhost:3001" );
   }
 
   addMsg = (newContent) => {
-    const oldMsg = this.state.messages;
+    // const oldMsg = this.state.messages;
     const newMsg = {
-      id: this.state.messages.length + 1,
+      // id: this.state.messages.length + 1,
       username: this.state.currentUser.name, 
       content: newContent
     };
-    const messages = [...oldMsg, newMsg];
+    // const messages = [...oldMsg, newMsg];
     // this.setState({messages: messages});
     this.socket.send(JSON.stringify(newMsg));
     
@@ -49,11 +49,23 @@ class App extends Component {
     this.setState({currentUser: currentUser});
   }
 
+  displayMsg = (data) => {
+    const oldMsg = this.state.messages;
+    const newMsg = JSON.parse(data);
+    const messages = [...oldMsg, newMsg];
+    this.setState( {messages: messages} );
+  }
+
   componentDidMount() {
     console.log("componentDidMount <App />");
     
     this.socket.onopen = (e) => {
       console.log("Connected to server"); 
+    }
+
+    this.socket.onmessage = (e) => {
+      console.log("k", e);
+      this.displayMsg(e.data);
     }
     setTimeout(() => {
       console.log("Simulating incoming message");
