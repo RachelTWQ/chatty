@@ -50,8 +50,8 @@ class App extends Component {
     console.log("componentDidMount <App />");
     const webSocket = new WebSocket( "ws://localhost:3001" );
     webSocket.onopen = (e) => {
-      console.log("Connected to server");
-      // webSocket.send("")
+      console.log("Connected to server"); 
+      webSocket.send("whatever");
     }
     setTimeout(() => {
       console.log("Simulating incoming message");
