@@ -14,7 +14,7 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
+      currentUser: {}, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: []
     };
     this.socket = new WebSocket( "ws://localhost:3001" );
@@ -56,6 +56,7 @@ class App extends Component {
     }
 
     this.socket.onmessage = (e) => {
+      console.log(e);
       this.displayMsg(e.data);
     }
 
