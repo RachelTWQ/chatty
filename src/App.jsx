@@ -23,14 +23,22 @@ class App extends Component {
   addMsg = (newContent) => {
     const newMsg = {
       username: this.state.currentUser.name, 
-      content: newContent
+      content: newContent,
+      type: "postMessage"
     };
     this.socket.send(JSON.stringify(newMsg));
   }
 
   addUser = (newUser) => {
     const currentUser = newUser ? {name: newUser} : {name: "Anonymous"};
-    this.setState({currentUser: currentUser});
+    // const old = this.state.messages;
+    const notification = {
+      content: `${this.state.currentUser.name} has changed their name to ${newUser}.`,
+      type: "postNotification"
+    }
+    // const messages = [...old, notification]
+    this.socket.send(JSON.stringify(notification));
+    this.setState({ currentUser: currentUser });
   }
 
   displayMsg = (data) => {
@@ -50,7 +58,7 @@ class App extends Component {
     this.socket.onmessage = (e) => {
       this.displayMsg(e.data);
     }
-    
+
     // setTimeout(() => {
     //   console.log("Simulating incoming message");
     //   // Add a new message to the list of messages in the data store
