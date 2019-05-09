@@ -1,47 +1,51 @@
 import React, { Component } from 'react';
 
 class CharBar extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      name: '',
+      message: ''
+    }
+    
+    this.onNameChange = this.onNameChange.bind(this)
+    this.onMessageChange = this.onMessageChange.bind(this)
+  }
   
-  _handleSubmit = (e) => {
-    if(e.key === "Enter" && e.shiftKey === false) {
-      e.preventDefault();
-      const newContent = e.target.value;
-      this.props.addMsg(newContent);
-      e.target.value = "";
+  onNameChange = (event) => {
+    this.setState({ name: event.target.value })
+  }
+  
+  onMessageChange = (event) => {
+    this.setState({ message: event.target.value })
+  }
+  
+  onEnterPressed = (event) => {
+    if(event.keyCode === 13) {
+      console.log('enter confirmed')
+      this.props.onEnterPressed(this.state.name, this.state.message)
     }
   }
   
-  // _onChange = (e) => {
-  //   const newUser = e.target.value;
-  //   this.props.addUser(newUser);
-  // }
-
-  _handleChange = (e) => {
-
-    if(e.key === "Enter" && e.shiftKey === false) {
-
-      e.preventDefault();
-      const newUser = e.target.value;
-      this.props.addUser(newUser);
-    }
-  }
- 
   render() {
     return (
       <footer className="chatbar" >
         <input
           className="chatbar-username"
           placeholder="Your Name (Optional)"
-          defaultValue={this.props.currentUser.name}
           type="text"
-          onKeyDown={this._handleChange}
+          onChange={this.onNameChange}
+          onKeyUp={this.onEnterPressed}
         />
 
         <input
           className="chatbar-message"
           placeholder="Type a message and hit ENTER"
           type="text"
-          onKeyDown={this._handleSubmit}
+          onChange={this.onMessageChange}
+          onKeyUp={this.onEnterPressed}
         />
       </footer>
     )
