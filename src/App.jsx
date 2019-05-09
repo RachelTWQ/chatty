@@ -1,28 +1,30 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import CharBar from './CharBar.jsx';
 import MessageList from './MessageList.jsx';
 
-function Navbar () {
+function Navbar({ count }) {
   return (
     <nav className="navbar">
       <a href="/" className="navbar-brand">Chatty</a>
+      <p>{ count } user(s) online</p>
     </nav>
   )
 }
 
 class App extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-      currentUser: {}, // optional. if currentUser is not defined, it means the user is Anonymous
-      messages: []
+      currentUser: { name: "" }, // optional. if currentUser is not defined, it means the user is Anonymous
+      messages: [],
+      userCount: 0
     };
-    this.socket = new WebSocket( "ws://localhost:3001" );
+    this.socket = new WebSocket("ws://localhost:3001");
   }
 
   addMsg = (newContent) => {
     const newMsg = {
-      username: this.state.currentUser.name, 
+      username: this.state.currentUser.name,
       content: newContent,
       type: "postMessage"
     };
@@ -30,34 +32,41 @@ class App extends Component {
   }
 
   addUser = (newUser) => {
-    const currentUser = newUser ? {name: newUser} : {name: "Anonymous"};
-    // const old = this.state.messages;
+
+    const currentUser = newUser ? { name: newUser } : { name: "Anonymous" };
     const notification = {
       content: `${this.state.currentUser.name} has changed their name to ${newUser}.`,
       type: "postNotification"
     }
-    // const messages = [...old, notification]
     this.socket.send(JSON.stringify(notification));
     this.setState({ currentUser: currentUser });
+  }
+
+  displayUserCount = (num) => {
+    const userCount = JSON.parse(num);
+    this.setState({userCount: userCount});
   }
 
   displayMsg = (data) => {
     const oldMsg = this.state.messages;
     const newMsg = JSON.parse(data);
     const messages = [...oldMsg, newMsg];
-    this.setState( {messages: messages} );
+    this.setState({ messages: messages });
   }
 
   componentDidMount() {
     console.log("componentDidMount <App />");
-    
+
     this.socket.onopen = (e) => {
-      console.log("Connected to server"); 
+      console.log("Connected to server");
     }
 
     this.socket.onmessage = (e) => {
-      console.log(e);
-      this.displayMsg(e.data);
+      if (typeof(JSON.parse(e.data)) === "number"){
+        this.displayUserCount(e.data);
+      } else {
+        this.displayMsg(e.data);
+      }
     }
 
     // setTimeout(() => {
@@ -74,9 +83,9 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Navbar/>
-        <MessageList message={this.state.messages}/>
-        <CharBar currentUser={this.state.currentUser} addMsg={this.addMsg} addUser={this.addUser}/>
+        <Navbar count={this.state.userCount}/>
+        <MessageList message={this.state.messages} />
+        <CharBar currentUser={this.state.currentUser} addMsg={this.addMsg} addUser={this.addUser} />
       </div>
     );
   }

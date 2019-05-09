@@ -17,7 +17,9 @@ class CharBar extends Component {
   // }
 
   _handleChange = (e) => {
+
     if(e.key === "Enter" && e.shiftKey === false) {
+
       e.preventDefault();
       const newUser = e.target.value;
       this.props.addUser(newUser);
