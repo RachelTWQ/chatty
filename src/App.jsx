@@ -14,24 +14,31 @@ function Navbar({ count }) {
 class App extends Component {
   constructor(props) {
     super(props);
+
+    const color = ["#32CD32", "#0F42C1", "#FF336E", "#000000"];
+    let index = Math.floor(4 * Math.random());
+    console.log(color, index)
+
     this.state = {
       currentUser: { name: "Anonymous" }, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [],
-      userCount: 0
+      userCount: 0,
+      color: color[index]
     };
     this.socket = new WebSocket("ws://localhost:3001");
   }
 
-  addMsg = (newContent) => {
+  sendMsg = (newContent) => {
     const newMsg = {
       username: this.state.currentUser.name,
       content: newContent,
-      type: "postMessage"
+      type: "postMessage",
+      color: this.state.color
     };
     this.socket.send(JSON.stringify(newMsg));
   }
 
-  addUser = (newUser) => {
+  sendUser = (newUser) => {
     let currentUser;
     let notification;
     if (newUser){
@@ -66,10 +73,6 @@ class App extends Component {
   componentDidMount() {
     console.log("componentDidMount <App />");
 
-    this.socket.onopen = (e) => {
-      console.log("Connected to server");
-    }
-
     this.socket.onmessage = (e) => {
       if (typeof(JSON.parse(e.data)) === "number"){
         this.displayUserCount(e.data);
@@ -93,8 +96,8 @@ class App extends Component {
     return (
       <div>
         <Navbar count={this.state.userCount}/>
-        <MessageList message={this.state.messages} />
-        <CharBar currentUser={this.state.currentUser} addMsg={this.addMsg} addUser={this.addUser} />
+        <MessageList message={this.state.messages}/>
+        <CharBar currentUser={this.state.currentUser} sendMsg={this.sendMsg} sendUser={this.sendUser} />
       </div>
     );
   }

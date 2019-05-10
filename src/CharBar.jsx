@@ -6,7 +6,7 @@ class CharBar extends Component {
     if(e.key === "Enter" && e.shiftKey === false) {
       e.preventDefault();
       const newContent = e.target.value;
-      this.props.addMsg(newContent);
+      this.props.sendMsg(newContent);
       e.target.value = "";
     }
   }
@@ -22,7 +22,7 @@ class CharBar extends Component {
 
       e.preventDefault();
       const newUser = e.target.value;
-      this.props.addUser(newUser);
+      this.props.sendUser(newUser);
     }
   }
  

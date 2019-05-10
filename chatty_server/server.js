@@ -20,9 +20,14 @@ const wss = new SocketServer({ server });
 // the ws parameter in the callback.
 wss.on('connection', (ws) => {
   console.log('Client connected');
-  //   ws.on('open', function open() {
-  //     ws.send('something');
-  //   });
+  
+    // ws.on('open', function open() {
+    //   let color = ["#a3fd7f", "#666666", "#120900", "#000000"];
+    //   let index = Math.floor(4 * Math.random());
+    //   console.log(color[index]);
+    //   ws.send(color[index]);
+    // });
+
   wss.broadcast = function broadcast(data) {
     wss.clients.forEach((client) => {
       if (client.readyState === socket.OPEN) {
@@ -30,7 +35,8 @@ wss.on('connection', (ws) => {
       }
     })
   }
-
+  
+  
   wss.broadcast(wss.clients.size);
 
   ws.on('message', function incoming(data) {
