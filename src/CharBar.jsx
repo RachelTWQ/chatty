@@ -1,31 +1,22 @@
 import React, { Component } from 'react';
 
 class CharBar extends Component {
-  
-  _handleSubmit = (e) => {
-    if(e.key === "Enter" && e.shiftKey === false) {
-      e.preventDefault();
-      const newContent = e.target.value;
+
+  handleMessageChange = (event) => {
+    if (event.key === "Enter") {
+      const newContent = event.target.value;
       this.props.sendMsg(newContent);
-      e.target.value = "";
+      event.target.value = "";
     }
   }
-  
-  // _onChange = (e) => {
-  //   const newUser = e.target.value;
-  //   this.props.addUser(newUser);
-  // }
 
-  _handleChange = (e) => {
-
-    if(e.key === "Enter" && e.shiftKey === false) {
-
-      e.preventDefault();
-      const newUser = e.target.value;
+  handleNameChange = (event) => {
+    if (event.key === "Enter") {
+      const newUser = event.target.value;
       this.props.sendUser(newUser);
     }
   }
- 
+
   render() {
     return (
       <footer className="chatbar" >
@@ -34,14 +25,14 @@ class CharBar extends Component {
           placeholder="Your Name (Optional)"
           defaultValue={this.props.currentUser.name}
           type="text"
-          onKeyDown={this._handleChange}
+          onKeyDown={this.handleNameChange}
         />
 
         <input
           className="chatbar-message"
           placeholder="Type a message and hit ENTER"
           type="text"
-          onKeyDown={this._handleSubmit}
+          onKeyDown={this.handleMessageChange}
         />
       </footer>
     )

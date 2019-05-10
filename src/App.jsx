@@ -6,7 +6,7 @@ function Navbar({ count }) {
   return (
     <nav className="navbar">
       <a href="/" className="navbar-brand">Chatty</a>
-      <p>{ count } user(s) online</p>
+      <p>{count} user(s) online</p>
     </nav>
   )
 }
@@ -41,26 +41,26 @@ class App extends Component {
   sendUser = (newUser) => {
     let currentUser;
     let notification;
-    if (newUser){
+    if (newUser) {
       currentUser = { name: newUser };
       notification = {
         content: `${this.state.currentUser.name} has changed their name to ${newUser}.`,
         type: "postNotification"
       }
     } else {
-    currentUser = { name: "Anonymous" };
-    notification = {
-      content: `${this.state.currentUser.name} has changed their name to Anonymous.`,
-      type: "postNotification"
+      currentUser = { name: "Anonymous" };
+      notification = {
+        content: `${this.state.currentUser.name} has changed their name to Anonymous.`,
+        type: "postNotification"
+      }
     }
-  }
     this.socket.send(JSON.stringify(notification));
     this.setState({ currentUser: currentUser });
   }
 
   displayUserCount = (num) => {
     const userCount = JSON.parse(num);
-    this.setState({userCount: userCount});
+    this.setState({ userCount: userCount });
   }
 
   displayMsg = (data) => {
@@ -74,7 +74,7 @@ class App extends Component {
     console.log("componentDidMount <App />");
 
     this.socket.onmessage = (e) => {
-      if (typeof(JSON.parse(e.data)) === "number"){
+      if (typeof (JSON.parse(e.data)) === "number") {
         this.displayUserCount(e.data);
       } else {
         this.displayMsg(e.data);
@@ -95,8 +95,8 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Navbar count={this.state.userCount}/>
-        <MessageList message={this.state.messages}/>
+        <Navbar count={this.state.userCount} />
+        <MessageList message={this.state.messages} />
         <CharBar currentUser={this.state.currentUser} sendMsg={this.sendMsg} sendUser={this.sendUser} />
       </div>
     );
