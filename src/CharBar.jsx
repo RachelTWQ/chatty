@@ -23,6 +23,7 @@ class CharBar extends Component {
         <input
           className="chatbar-username"
           placeholder="Your Name (Optional)"
+          defaultValue={this.props.currentUser}
           type="text"
           onKeyDown={this.handleNameChange}
         />
