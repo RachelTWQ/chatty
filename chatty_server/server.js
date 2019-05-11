@@ -20,14 +20,7 @@ const wss = new SocketServer({ server });
 // the ws parameter in the callback.
 wss.on('connection', (ws) => {
   console.log('Client connected');
-  
-    // ws.on('open', function open() {
-    //   let color = ["#a3fd7f", "#666666", "#120900", "#000000"];
-    //   let index = Math.floor(4 * Math.random());
-    //   console.log(color[index]);
-    //   ws.send(color[index]);
-    // });
-
+  // Set up broadcast function to send back content to all the connected clients
   wss.broadcast = function broadcast(data) {
     wss.clients.forEach((client) => {
       if (client.readyState === socket.OPEN) {
@@ -35,8 +28,7 @@ wss.on('connection', (ws) => {
       }
     })
   }
-  
-  
+  // Send connected clients counts to all connected clients upon new client connection 
   wss.broadcast(wss.clients.size);
 
   ws.on('message', function incoming(data) {
@@ -44,6 +36,7 @@ wss.on('connection', (ws) => {
      
     incomingData["id"] = uuidv1();
     if (incomingData.type === "postMessage") {
+      // Prevent empty message entry
       if (incomingData.content.trim().length > 0) {
       incomingData.type = "incomingMessage";
       }
@@ -58,6 +51,7 @@ wss.on('connection', (ws) => {
   );
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
   ws.on('close', () => {
+    // Update connected clients counts to all connected clients upon clinet disconnection
     wss.broadcast(wss.clients.size);
     console.log('Client disconnected');
   });

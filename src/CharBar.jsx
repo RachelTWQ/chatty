@@ -12,8 +12,8 @@ class CharBar extends Component {
 
   handleNameChange = (event) => {
     if (event.key === "Enter") {
-      const newUser = event.target.value;
-      this.props.sendUser(newUser);
+      const usernameEntry = event.target.value;
+      this.props.sendUser(usernameEntry);
     }
   }
 
@@ -23,7 +23,6 @@ class CharBar extends Component {
         <input
           className="chatbar-username"
           placeholder="Your Name (Optional)"
-          defaultValue={this.props.currentUser.name}
           type="text"
           onKeyDown={this.handleNameChange}
         />
