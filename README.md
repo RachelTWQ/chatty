@@ -1,21 +1,18 @@
-React Boilerplate
+# Chatty App
 =====================
 
-A minimal and light dev environment for ReactJS.
+A minimal aclient-side SPA (single-page app) built with ReactJS. It allows users to communicate with each other without having to register accounts.
 
-### Usage
+## Getting Started
 
-Clone the boilerplate and create your own git repo.
+Fork this repository, then clone your fork of this repository. Install the dependencies and start the server from chatty_server folder.
 
 ```
-git clone git@github.com:lighthouse-labs/react-simple-boilerplate.git
-cd react-simple-boilerplate
-git remote rm origin
-git remote add origin [YOUR NEW REPOSITORY]
-# Manually update your package.json file
+npm install
+npm start
 ```
 
-Install the dependencies and start the server.
+Install the dependencies and start the server from root folder.
 
 ```
 npm install
@@ -23,11 +20,11 @@ npm start
 open http://localhost:3000
 ```
 
-### Static Files
+## Stack
 
-You can store static files like images, fonts, etc in the `build` folder.
-
-For example, if you copy a file called my_image.png into the build folder you can access it using `http://localhost:3000/build/my_image.png`.
+* Webpack with Babel, JSX, ES6, webpack dev server (comes with boilerplate)
+* WebSockets using Node package ws on the server-side, and native WebSocket on client side
+* ReactJS
 
 ### Linting
 
@@ -37,9 +34,30 @@ This boilerplate project includes React ESLint configuration.
 npm run lint
 ```
 
-### Dependencies
+
+## Feature
+
+* The client-side app communicates with a server via WebSockets for multi-user real-time updates
+* When any connected user enter username and hit ENTER, a notification about name change will be sent and displayed to all current connected users
+* Any connected user can change to anonymous by hit ENTER without entering their name and their username will remain unchanged before any username update
+* Any connected user can type non-empty message and hit ENTER to send and display message to all current connected users
+* Current user count real-time updates to all connected clients in header
+* Each connected user is randomly assigned and keep track of color for username display
+
+## Dependencies
 
 * React
 * Webpack
 * [babel-loader](https://github.com/babel/babel-loader)
 * [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+* express
+* ws
+
+## Screenshot
+!["Screenshot of realtime multiple users  display"](https://github.com/RachelTWQ/chatty/blob/master/screenshots/realtime-multiple-users-%20display.png)
+
+!["Screenshot of fixed username color"](https://github.com/RachelTWQ/chatty/blob/master/screenshots/fixed-username-color.png)
+
+!["Screenshot of user count display"](https://github.com/RachelTWQ/chatty/blob/master/screenshots/user-count-display.png)
+
+!["Screenshot of anonymous username"](https://github.com/RachelTWQ/chatty/blob/master/screenshots/anonymous-username.png)
