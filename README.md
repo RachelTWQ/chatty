@@ -42,7 +42,7 @@ npm run lint
 * Any connected user can change to anonymous by hit ENTER without entering their name and their username will remain unchanged before any username update
 * Any connected user can type non-empty message and hit ENTER to send and display message to all current connected users
 * Current user count real-time updates to all connected clients in header
-* Each connected user is randomly assigned and keep track of color for username display
+* Each user connected to the server is randomly assigned a fixed color upon connection for their username display
 
 ## Dependencies
 
