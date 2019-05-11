@@ -46,12 +46,28 @@ npm run lint
 
 ## Dependencies
 
-* React
-* Webpack
-* [babel-loader](https://github.com/babel/babel-loader)
-* [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+#### Dependencies for client side
+
+* babel-core
+* babel-loader
+* babel-preset-es2015
+* babel-preset-react
+* babel-preset-stage-0
+* css-loader
+* eslint
+* eslint-plugin-react
+* node-sass
+* sass-loader0",
+* sockjs-client
+* style-loader
+* webpack
+* webpack-dev-server
+
+#### Dependencies for server side
+
 * express
 * ws
+* uuid
 
 ## Screenshot
 !["Screenshot of realtime multiple users  display"](https://github.com/RachelTWQ/chatty/blob/master/screenshots/realtime-multiple-users-%20display.png)
