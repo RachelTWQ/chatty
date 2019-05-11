@@ -1,5 +1,4 @@
 # Chatty App
-=====================
 
 A minimal aclient-side SPA (single-page app) built with ReactJS. It allows users to communicate with each other without having to register accounts.
 
@@ -46,7 +45,7 @@ npm run lint
 
 ## Dependencies
 
-#### Dependencies for client side
+### Dependencies for client side
 
 * babel-core
 * babel-loader
@@ -63,7 +62,7 @@ npm run lint
 * webpack
 * webpack-dev-server
 
-#### Dependencies for server side
+### Dependencies for server side
 
 * express
 * ws
